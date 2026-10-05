@@ -1,0 +1,141 @@
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=BIZ+UDPGothic:wght@400;700&family=Dela+Gothic+One&family=IBM+Plex+Mono:wght@400;600&display=swap">
+<title>そらのめぐり｜使い倒し</title>
+<style>
+:root{
+  --fail:#C23B2A;--fail-bg:#FDF0EE;
+  --bg:#F6F7F9;--surface:#FFFFFF;--ink:#15181E;--ink-2:#3E4552;--ink-3:#687080;--rule:#DDE1E7;--hover:#F0F2F5;
+  --g:#179A62;--o:#DE7812;--b:#2F55D8;--focus:#2F55D8;
+  --g-t:#127A4D;--o-t:#A65308;--b-t:#2F55D8;
+  --star-bg:#FFF0BF;--star-ink:#5E4300;
+  --display:"Dela Gothic One","BIZ UDPGothic","Hiragino Sans",sans-serif;
+  --body:"BIZ UDPGothic","Hiragino Sans","Yu Gothic","Noto Sans JP",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){color-scheme:dark;
+  --bg:#0F1217;--surface:#171B22;--ink:#E8EBF0;--ink-2:#BFC6D1;--ink-3:#8E97A6;--rule:#2A313C;--hover:#1D222B;
+  --g:#3CC98C;--o:#F2A04A;--b:#7C97FF;--focus:#7C97FF;--g-t:#3CC98C;--o-t:#F2A04A;--b-t:#7C97FF;--star-bg:#3B3214;--star-ink:#F3D27A;--fail:#FF8A78;--fail-bg:#2E1B19;}}
+:root[data-theme="dark"]{color-scheme:dark;
+  --bg:#0F1217;--surface:#171B22;--ink:#E8EBF0;--ink-2:#BFC6D1;--ink-3:#8E97A6;--rule:#2A313C;--hover:#1D222B;
+  --g:#3CC98C;--o:#F2A04A;--b:#7C97FF;--focus:#7C97FF;--g-t:#3CC98C;--o-t:#F2A04A;--b-t:#7C97FF;--star-bg:#3B3214;--star-ink:#F3D27A;--fail:#FF8A78;--fail-bg:#2E1B19;}
+@view-transition{navigation:auto}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.85;padding-inline:16px;-webkit-font-smoothing:antialiased}
+.wrap{max-width:860px;margin:0 auto;padding-block:48px 96px;display:flex;flex-direction:column;gap:40px}
+h1,h2,h3{margin:0;text-wrap:balance}
+p,ul,dl,dd{margin:0}
+a{color:var(--b);text-underline-offset:3px}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px;border-radius:4px}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.tags{display:flex;flex-wrap:wrap;gap:6px}
+.tag{font-size:13px;line-height:1.6;padding:1px 10px;border-radius:999px;background:var(--hover);color:var(--ink-2)}
+.tag.star{background:var(--star-bg);color:var(--star-ink);font-weight:700}
+.tag.kind{background:transparent;border:1px solid var(--rule)}
+.tag.fail{background:var(--fail-bg);color:var(--fail);font-weight:700}
+footer{font-size:13px;color:var(--ink-3)}
+
+.wrap{gap:28px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px;font-size:14px}
+.top a{font-weight:700;text-decoration:none}
+.top a:hover{text-decoration:underline}
+.top .no{font-family:var(--mono);color:var(--ink-3)}
+.head{display:grid;gap:10px;border-left:8px solid var(--lc);padding-left:18px}
+.head .meta{font-size:13px;color:var(--ink-3);display:flex;flex-wrap:wrap;gap:4px 12px}
+.head .meta b{color:var(--lt)}
+.head h1{font-size:clamp(30px,6vw,44px);font-weight:700;line-height:1.25}
+.head .one{font-size:18px;color:var(--ink-2)}
+.video{display:grid;gap:8px}
+.video video{display:block;width:100%;aspect-ratio:16/9;background:#0A0C10;border-radius:14px;border:1px solid var(--rule)}
+.video p{font-size:13px;color:var(--ink-3)}
+h2.sec{font-size:18px;font-weight:700;color:var(--ink);margin-bottom:14px}
+.panel{background:var(--surface);border:1px solid var(--rule);border-radius:14px;padding:20px 22px}
+.shots{display:grid;gap:12px}
+.shots.wide{grid-template-columns:repeat(var(--n),minmax(0,1fr))}
+.shots.phone{grid-auto-flow:column;grid-auto-columns:200px;justify-content:start}
+.combo{display:grid;grid-template-columns:auto 1fr;gap:32px;align-items:center}
+.combo > *{min-width:0}
+.hint{font-size:13px;color:var(--ink-3);margin-top:8px}
+.jump{display:flex;flex-wrap:wrap;gap:8px}
+.jump a{display:inline-flex;align-items:center;min-height:44px;font-size:15px;font-weight:700;padding:0 18px;border-radius:10px;border:1px solid var(--rule);background:var(--surface);text-decoration:none}
+.jump a.primary{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.jump a:hover{border-color:var(--lc)}
+.shot{all:unset;cursor:zoom-in;display:grid;gap:6px;min-width:0}
+.shot img{display:block;width:100%;height:auto;border:1px solid var(--rule);background:var(--bg)}
+.shots.wide .shot img{aspect-ratio:16/10;object-fit:cover;object-position:top;border-radius:10px}
+.shots.phone .shot img{aspect-ratio:9/19.5;object-fit:cover;object-position:top;border-radius:16px}
+.shot span{font-size:13px;color:var(--ink-3);line-height:1.6}
+.shot:focus-visible img{outline:3px solid var(--focus);outline-offset:2px}
+.feat{list-style:none;padding:0;display:grid;gap:8px}
+.feat li{position:relative;padding-left:28px;line-height:1.6}
+.feat li::before{content:"";position:absolute;left:2px;top:.25em;width:18px;height:18px;border-radius:50%;background:var(--lc);opacity:.18}
+.feat li::after{content:"";position:absolute;left:8px;top:calc(.25em + 4px);width:5px;height:9px;border:solid var(--lc);border-width:0 2.5px 2.5px 0;transform:rotate(45deg)}
+.failbox{border:1px solid var(--rule);border-left:4px solid var(--fail);background:var(--surface);border-radius:14px;padding:18px 22px;display:grid;gap:10px}
+.failbox .fl{font-size:16px;font-weight:700;color:var(--fail)}
+.failbox .shots{grid-template-columns:repeat(var(--n),minmax(0,1fr));max-width:420px}
+.failbox .shot img{aspect-ratio:1/1;object-fit:cover;border-radius:10px}
+.story dl{display:grid;grid-template-columns:9em 1fr;gap:14px 16px}
+.story dt{font-size:14px;font-weight:700;color:var(--ink-2);padding-top:1px}
+.story dd ul{padding-left:1.1em;display:grid;gap:4px}
+.voice{font-size:17px;background:var(--hover);border-radius:10px;padding:14px 18px;display:grid;gap:2px;margin-top:18px}
+.voice small{font-size:12px;color:var(--ink-3)}
+.jump a.site{background:var(--lc);color:#fff;border-color:var(--lc);min-height:52px;padding:0 24px;font-size:17px;gap:10px;box-shadow:0 6px 18px -10px var(--lc)}
+.jump a.site:hover{border-color:var(--lc);filter:brightness(1.07)}
+.jump a.site .ar{font-size:18px}
+.jump a.site ~ a.primary{background:var(--surface);color:var(--ink);border-color:var(--rule);min-height:52px}
+.cta{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px 20px;background:var(--surface);border:1px solid var(--rule);border-left:6px solid var(--lc);border-radius:14px;padding:18px 22px}
+.cta .t{display:grid;gap:2px;min-width:0}
+.cta .t b{font-size:17px}
+.cta .t small{font-family:var(--mono);font-size:13px;color:var(--ink-3);overflow-wrap:anywhere}
+.cta a{display:inline-flex;align-items:center;gap:10px;min-height:48px;padding:0 22px;border-radius:10px;background:var(--lc);color:#fff;font-size:16px;font-weight:700;text-decoration:none}
+.cta a:hover{filter:brightness(1.07)}
+.cta a:focus-visible,.jump a.site:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
+@media (max-width:600px){.jump a.site{flex:1 1 100%;justify-content:center}.cta a{flex:1 1 100%;justify-content:center}}
+.era{font-size:14px;color:var(--ink-2);display:grid;gap:4px}
+.era b{color:var(--lt)}
+.pager{display:grid;grid-template-columns:1fr 1fr;gap:12px;border-top:1px solid var(--rule);padding-top:20px}
+.pager a{display:grid;gap:2px;padding:12px 16px;border:1px solid var(--rule);border-radius:12px;background:var(--surface);text-decoration:none;color:var(--ink)}
+.pager a:hover{border-color:var(--b)}
+.pager small{font-size:12px;color:var(--ink-3)}
+.pager b{font-size:15px}
+.pager .next{text-align:right;grid-column:2}
+.back{text-align:center;font-size:15px;font-weight:700}
+.back a{text-decoration:none}
+dialog.lb{border:0;padding:0;background:transparent;max-width:min(94vw,1200px);max-height:92vh}
+dialog.lb::backdrop{background:rgba(10,12,16,.82)}
+dialog.lb img{display:block;max-width:100%;max-height:84vh;width:auto;height:auto;border-radius:10px;margin:0 auto}
+dialog.lb p{color:#E8EBF0;font-size:14px;text-align:center;margin-top:10px}
+dialog.lb button{position:fixed;top:14px;right:14px;font:inherit;font-size:14px;background:#fff;color:#15181E;border:0;border-radius:8px;padding:6px 14px;cursor:pointer}
+@media (max-width:600px){
+  .panel{padding:16px}
+  .shots.wide{grid-template-columns:1fr}
+  .shots.phone{grid-auto-columns:72vw;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:6px;margin-inline:-16px;padding-inline:16px;scroll-padding-inline:16px}
+  .shots.phone .shot{scroll-snap-align:start}
+  .shots.phone:has(.shot:only-child){grid-auto-columns:60vw}
+  .combo{grid-template-columns:minmax(0,1fr);gap:20px}
+  .story dl{grid-template-columns:1fr;gap:8px}
+  .story dd{margin-bottom:16px}
+  .pager{grid-template-columns:1fr}
+  .pager .next{grid-column:1}
+}
+</style>
+<div class="wrap" style="--lc:var(--b);--lt:var(--b-t)">
+<nav class="top"><a href="../portfolio.html#w10">← 作品一覧</a><span class="no">10 / 14</span></nav>
+<header class="head"><p class="meta"><b>第2期</b><span class="mono">2026.08.13 – 08.17</span></p><h1>そらのめぐり</h1><p class="one">4本のつまみで空をつくり、生まれた「天気の子」を懐かせる育成ゲーム。</p><div class="tags"><span class="tag kind">ゲーム</span><span class="tag">公開中</span><span class="tag">コンテスト：天気</span></div></header>
+<nav class="jump" aria-label="このページの移動"><a class="site" href="https://github.com/compass505/soranomeguri" target="_blank" rel="noopener">GitHub でコードを見る<span class="ar" aria-hidden="true">↗</span></a><a class="primary" href="#story">AI とどう作ったか ↓</a></nav>
+<section class="video" aria-label="紹介動画"><video controls playsinline preload="metadata" poster="../video/sora.jpg"><source src="../video/sora.mp4" type="video/mp4"></video><p>紹介動画（20秒・音あり）</p></section>
+<section class="panel"><h2 class="sec">特徴</h2><ul class="feat"><li>気温・湿り・気圧・風の4本のつまみで空をつくる</li><li>生まれた天気の子10体と出会い、懐かせる</li><li>罰なし。季節（二十四節気）がめぐっていく</li></ul></section>
+<section class="panel story" id="story"><h2 class="sec">作った経緯</h2><dl><dt>なぜ作ったか</dt><dd><p>審査員が好きそうなものに寄せた。犬猫やかわいいものが好きな人だったので、空想の動物と出会う系にした。</p></dd><dt>AI とどう作ったか</dt><dd><ul><li>天気の子10体の絵を Codex に描かせ、かわいいかは自分で判断した</li><li>動いていた最初の版を「プレイヤーが何もしていない」と判断して作り直した</li></ul></dd><dt>つまずき</dt><dd><p>イラストはうまくいったが、UI はもう少し凝ってよかった。</p></dd><dt>その頃していたこと</dt><dd><ul><li>8/17 SyncGame と研修の総合演習が同じ日に始まる</li></ul></dd></dl></section>
+<section><h2 class="sec">画面</h2><div class="shots wide" style="--n:2"><button type="button" class="shot" data-src="../img/sora-1.jpg" data-cap="タイトル画面"><img src="../img/sora-1.jpg" alt="タイトル画面" loading="lazy"><span>タイトル画面</span></button><button type="button" class="shot" data-src="../img/sora-2.jpg" data-cap="天気から生まれる「天気の子」10体"><img src="../img/sora-2.jpg" alt="天気から生まれる「天気の子」10体" loading="lazy"><span>天気から生まれる「天気の子」10体</span></button></div><p class="hint">画像を押すと拡大できます</p></section>
+<section class="cta"><div class="t"><b>コードを公開しています</b><small>github.com/compass505/soranomeguri</small></div><a href="https://github.com/compass505/soranomeguri" target="_blank" rel="noopener">GitHub でコードを見る<span aria-hidden="true">↗</span></a></section>
+<section class="era"><h2 class="sec">この時期（第2期　2026.07.20 –）</h2><p>Claude Code を使い始め、Claude が判断して Codex が手を動かす分担になった。隔週のアプリ作成コンテストでゲームを作り続け、研修の総合演習ではリーダーを務めた。</p><p>AI への任せ方：<b>作らせる仕組みを設計する</b></p></section>
+<nav class="pager" aria-label="前後の作品"><a class="prev" href="janken.html"><small>← 前の作品</small><b>じゃんけんRPG</b></a><a class="next" href="syncgame.html"><small>次の作品 →</small><b>SyncGame</b></a></nav><p class="back"><a href="../portfolio.html#w10">作品一覧へ戻る</a></p></div>
+<dialog class="lb" id="lb" aria-label="画像の拡大表示"><button type="button">閉じる</button><img alt=""><p></p></dialog>
+<script>
+(function(){
+  var lb=document.getElementById('lb'), lbi=lb.querySelector('img'), lbc=lb.querySelector('p');
+  document.querySelectorAll('.shot').forEach(function(b){b.addEventListener('click',function(){
+    lbi.src=b.dataset.src; lbi.alt=b.dataset.cap; lbc.textContent=b.dataset.cap;
+    if(lb.showModal){lb.showModal();}else{window.open(b.dataset.src);} });});
+  lb.querySelector('button').addEventListener('click',function(){lb.close();});
+  lb.addEventListener('click',function(e){if(e.target===lb)lb.close();});
+})();
+</script>

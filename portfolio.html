@@ -1,0 +1,179 @@
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=BIZ+UDPGothic:wght@400;700&family=Dela+Gothic+One&family=IBM+Plex+Mono:wght@400;600&display=swap">
+<title>使い倒し</title>
+<style>
+:root{
+  --fail:#C23B2A;--fail-bg:#FDF0EE;
+  --bg:#F6F7F9;--surface:#FFFFFF;--ink:#15181E;--ink-2:#3E4552;--ink-3:#687080;--rule:#DDE1E7;--hover:#F0F2F5;
+  --g:#179A62;--o:#DE7812;--b:#2F55D8;--focus:#2F55D8;
+  --g-t:#127A4D;--o-t:#A65308;--b-t:#2F55D8;
+  --star-bg:#FFF0BF;--star-ink:#5E4300;
+  --display:"Dela Gothic One","BIZ UDPGothic","Hiragino Sans",sans-serif;
+  --body:"BIZ UDPGothic","Hiragino Sans","Yu Gothic","Noto Sans JP",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){color-scheme:dark;
+  --bg:#0F1217;--surface:#171B22;--ink:#E8EBF0;--ink-2:#BFC6D1;--ink-3:#8E97A6;--rule:#2A313C;--hover:#1D222B;
+  --g:#3CC98C;--o:#F2A04A;--b:#7C97FF;--focus:#7C97FF;--g-t:#3CC98C;--o-t:#F2A04A;--b-t:#7C97FF;--star-bg:#3B3214;--star-ink:#F3D27A;--fail:#FF8A78;--fail-bg:#2E1B19;}}
+:root[data-theme="dark"]{color-scheme:dark;
+  --bg:#0F1217;--surface:#171B22;--ink:#E8EBF0;--ink-2:#BFC6D1;--ink-3:#8E97A6;--rule:#2A313C;--hover:#1D222B;
+  --g:#3CC98C;--o:#F2A04A;--b:#7C97FF;--focus:#7C97FF;--g-t:#3CC98C;--o-t:#F2A04A;--b-t:#7C97FF;--star-bg:#3B3214;--star-ink:#F3D27A;--fail:#FF8A78;--fail-bg:#2E1B19;}
+@view-transition{navigation:auto}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.85;padding-inline:16px;-webkit-font-smoothing:antialiased}
+.wrap{max-width:860px;margin:0 auto;padding-block:48px 96px;display:flex;flex-direction:column;gap:40px}
+h1,h2,h3{margin:0;text-wrap:balance}
+p,ul,dl,dd{margin:0}
+a{color:var(--b);text-underline-offset:3px}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px;border-radius:4px}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.tags{display:flex;flex-wrap:wrap;gap:6px}
+.tag{font-size:13px;line-height:1.6;padding:1px 10px;border-radius:999px;background:var(--hover);color:var(--ink-2)}
+.tag.star{background:var(--star-bg);color:var(--star-ink);font-weight:700}
+.tag.kind{background:transparent;border:1px solid var(--rule)}
+.tag.fail{background:var(--fail-bg);color:var(--fail);font-weight:700}
+footer{font-size:13px;color:var(--ink-3)}
+
+.hero{display:grid;gap:16px}
+.eyebrow{font-size:13px;color:var(--ink-3);letter-spacing:.06em}
+.hero h1{font-family:var(--display);font-weight:400;font-size:clamp(48px,10vw,88px);line-height:1.05;letter-spacing:.03em}
+.hero .lede{font-size:18px;color:var(--ink-2)}
+.legend{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin-top:8px}
+.legend a{display:grid;gap:4px;padding:10px 12px 12px 0;text-decoration:none;color:var(--ink)}
+.legend a+a{padding-left:12px}
+.legend .bar{height:8px;border-radius:4px;background:var(--lc)}
+.legend b{font-size:16px}
+.legend span{font-size:13px;color:var(--ink-3)}
+.legend a:hover b{text-decoration:underline;text-underline-offset:4px}
+@media (max-width:600px){.wrap{padding-top:24px}.hero{gap:12px}.legend{grid-template-columns:1fr;gap:6px}.legend a,.legend a+a{grid-template-columns:44px auto 1fr;align-items:center;gap:10px;padding:2px 0}.legend .bar{height:6px}.legend .env{display:none}.legend br{display:none}}
+
+.controls{display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;align-items:center;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);padding-block:10px}
+.controls .count{font-size:14px;color:var(--ink-3)}
+.controls .btns{display:flex;gap:8px;flex-wrap:wrap}
+.controls button{font:inherit;font-size:14px;padding:6px 14px;border-radius:8px;border:1px solid var(--rule);background:var(--surface);color:var(--ink);cursor:pointer}
+.controls button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+
+.route{list-style:none;margin:0;padding:0}
+.route > li{position:relative;display:grid;grid-template-columns:56px 1fr;column-gap:14px}
+.route > li::before{content:"";position:absolute;left:24px;top:0;bottom:0;width:8px;background:var(--lc)}
+.route > li.first::before{top:26px}
+.route > li.last::before{bottom:calc(100% - 40px)}
+.route > li[hidden]{display:none}
+.era-row{padding:28px 0 14px}
+.era-row .node{grid-column:1;justify-self:center;align-self:start;margin-top:4px;width:22px;height:22px;border-radius:50%;background:var(--lc);position:relative;z-index:1;border:4px solid var(--bg);box-sizing:content-box}
+.era-row .txt{grid-column:2;display:grid;gap:2px}
+.era-row h2{font-size:24px;font-weight:700;display:flex;flex-wrap:wrap;gap:4px 12px;align-items:baseline}
+.era-row h2 small{font-size:14px;font-weight:400;color:var(--ink-3)}
+.era-row .how{font-size:14px;color:var(--ink-2)}
+.era-row .how b{color:var(--lt)}
+
+.st{padding-block:10px;scroll-margin-top:24px}
+.st.star a.card{border:2px solid var(--lc)}
+.st:target a.card{box-shadow:0 0 0 4px color-mix(in srgb,var(--lc) 35%,transparent)}
+.st .badge{grid-column:1;justify-self:center;margin-top:20px;position:relative;z-index:1;width:40px;height:40px;border-radius:50%;background:var(--surface);border:5px solid var(--lc);display:grid;place-items:center;font-family:var(--mono);font-size:13px;font-weight:600;color:var(--ink)}
+.st.star .badge{width:44px;height:44px;border-radius:12px;background:var(--lc);color:#fff;margin-top:18px}
+a.card{grid-column:2;display:grid;grid-template-columns:220px 1fr;background:var(--surface);border:1px solid var(--rule);border-radius:14px;overflow:hidden;text-decoration:none;color:var(--ink);transition:border-color .15s,transform .15s,box-shadow .15s}
+a.card:hover{border-color:var(--lc);box-shadow:0 6px 20px -12px rgba(0,0,0,.35)}
+@media (prefers-reduced-motion:no-preference){a.card:hover{transform:translateY(-2px)}}
+.thumb{position:relative;min-height:138px;background:var(--hover);overflow:hidden}
+.thumb img{position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:cover;object-position:top}
+.thumb.v img{object-position:center}
+.thumb.ph{background:color-mix(in srgb,var(--lc) 12%,var(--hover))}
+.thumb.ph img{object-fit:contain;padding:10px 0;filter:drop-shadow(0 4px 10px rgba(0,0,0,.18))}
+a.card.noimg{grid-template-columns:1fr}
+.thumb .play{position:absolute;left:10px;bottom:10px;display:flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:#fff;background:rgba(10,12,16,.72);padding:3px 10px 3px 8px;border-radius:999px}
+.thumb .play::before{content:"";width:0;height:0;border-left:8px solid #fff;border-top:5px solid transparent;border-bottom:5px solid transparent}
+.card .txt{display:grid;gap:4px;align-content:center;padding:14px 20px}
+.card .date{font-family:var(--mono);font-size:13px;color:var(--ink-3)}
+.card h3{font-size:21px;font-weight:700;line-height:1.35}
+.card .one{font-size:15px;color:var(--ink-2);line-height:1.6}
+.card .tags{margin-top:6px}
+.card .more{font-size:14px;font-weight:700;color:var(--lt);margin-top:6px}
+.cardbox{grid-column:2;display:grid;background:var(--surface);border:1px solid var(--rule);border-radius:14px;overflow:hidden;transition:border-color .15s,box-shadow .15s}
+.cardbox a.card{grid-column:auto;border:0;border-radius:0;box-shadow:none!important;transform:none!important}
+.cardbox:has(a:hover){border-color:var(--lc);box-shadow:0 6px 20px -12px rgba(0,0,0,.35)}
+.st.star .cardbox{border:2px solid var(--lc)}
+.st:target .cardbox{box-shadow:0 0 0 4px color-mix(in srgb,var(--lc) 35%,transparent)}
+a.live{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:48px;padding:0 20px;border-top:1px solid var(--rule);background:color-mix(in srgb,var(--lc) 7%,var(--surface));color:var(--lt);text-decoration:none}
+a.live b{font-size:15px;font-weight:700}
+a.live small{font-family:var(--mono);font-size:12px;color:var(--ink-3);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+a.live .go{display:inline-flex;align-items:center;gap:8px;flex:none}
+a.live .ar{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--lc);color:#fff;font-size:14px}
+a.live:hover{background:color-mix(in srgb,var(--lc) 13%,var(--surface))}
+a.live:focus-visible,.cardbox a.card:focus-visible{outline:3px solid var(--focus);outline-offset:-3px}
+@media (max-width:600px){a.live small{display:none}}
+@media (max-width:600px){
+  .route > li{grid-template-columns:32px minmax(0,1fr);column-gap:8px}
+  .route > li::before{left:14px;width:4px}
+  .route > li.first::before{top:20px}
+  .era-row .node{width:16px;height:16px;border-width:3px}
+  .era-row h2{font-size:21px}
+  .st .badge{width:28px;height:28px;border-width:3px;font-size:12px;margin-top:14px}
+  .st.star .badge{width:30px;height:30px;border-width:3px;margin-top:13px}
+  a.card{grid-template-columns:1fr}
+  .thumb{min-height:0;aspect-ratio:16/9}
+  .card .txt{padding:12px 16px 14px}
+}
+.sum{display:grid;gap:18px;border-top:1px solid var(--rule);padding-top:32px}
+.sum h2{font-size:24px}
+.sum .cols{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.sum section{background:var(--surface);border:1px solid var(--rule);border-radius:12px;padding:16px 18px;display:grid;gap:8px;align-content:start}
+.sum h3{font-size:16px}
+.sum ol,.sum ul{margin:0;padding-left:1.2em;font-size:15px;color:var(--ink-2);display:grid;gap:4px}
+.sum b{color:var(--ink)}
+@media (max-width:760px){.sum .cols{grid-template-columns:1fr}}
+</style>
+<div class="wrap">
+<header class="hero"><p class="eyebrow">新人エンジニアの AI 活用ポートフォリオ ／ 2026年5月〜9月</p><h1>使い倒し</h1><p class="lede">AI と作った14の作品を、作った順に。カードを押すと、紹介動画と作った経緯が見られます。</p>
+<nav class="legend" aria-label="時期">
+<a href="#e1" style="--lc:var(--g);--lt:var(--g-t)"><span class="bar"></span><b>第1期</b><span>2026.05.08 – 05.24<br><span class="env">Windows・Codex</span></span></a>
+<a href="#e2" style="--lc:var(--o);--lt:var(--o-t)"><span class="bar"></span><b>移行期</b><span>2026.05.25 – 07.19<br><span class="env">Windows と Mac を並行・Codex</span></span></a>
+<a href="#e3" style="--lc:var(--b);--lt:var(--b-t)"><span class="bar"></span><b>第2期</b><span>2026.07.20 –<br><span class="env">Mac・Claude Code ＋ Codex</span></span></a>
+</nav></header>
+<div class="controls"><span class="count" id="count">14作品</span><div class="btns"><button type="button" data-f="star" aria-pressed="false">代表作だけ</button><button type="button" data-f="video" aria-pressed="false">動画のある作品だけ</button></div></div>
+<ol class="route" aria-label="作品（作った順）">
+<li class="era-row first" id="e1" style="--lc:var(--g);--lt:var(--g-t)"><span class="node" aria-hidden="true"></span><div class="txt"><h2>第1期<small>2026.05.08 – 05.24　Windows・Codex</small></h2><p class="how">AI への任せ方：<b>対話しながら作らせる</b></p></div></li>
+<li class="st star" id="w01" data-star="1" data-video="1" style="--lc:var(--g);--lt:var(--g-t)"><span class="badge" aria-hidden="true">01</span><div class="cardbox"><a class="card" href="works/techcompass.html"><div class="thumb v"><img src="video/techcompass.jpg" alt="" loading="eager"><span class="play">動画</span></div><div class="txt"><span class="date">2026.05.08 –</span><h3>Tech Compass 505</h3><p class="one">IT ニュースを AI が毎朝選んで要約し、重要度をつけて並べるサイト。</p><div class="tags"><span class="tag star">代表作</span><span class="tag kind">Web</span><span class="tag">公開中・毎朝自動更新</span></div><span class="more">動画と経緯を見る →</span></div></a><a class="live" href="https://compass505.github.io/techcompass/" target="_blank" rel="noopener"><small>compass505.github.io/techcompass</small><span class="go"><b>実際のサイトを開く</b><span class="ar" aria-hidden="true">↗</span></span></a></div></li>
+<li class="st" id="w02" data-star="0" data-video="0" style="--lc:var(--g);--lt:var(--g-t)"><span class="badge" aria-hidden="true">02</span><a class="card" href="works/muscle.html"><div class="thumb"><img src="img/muscle-1.jpg" alt="" loading="eager"></div><div class="txt"><span class="date">2026.05.13 – 05.20</span><h3>筋肉育成ゲーム</h3><p class="one">プロテインを体の部位に与えて、部位ごとに体を育てる Web ゲーム。</p><div class="tags"><span class="tag fail">失敗</span><span class="tag kind">ゲーム</span></div><span class="more">経緯を見る →</span></div></a></li>
+<li class="st" id="w03" data-star="0" data-video="0" style="--lc:var(--g);--lt:var(--g-t)"><span class="badge" aria-hidden="true">03</span><a class="card" href="works/techradar.html"><div class="thumb"><img src="img/techradar.jpg" alt="" loading="lazy"></div><div class="txt"><span class="date">2026.05.20 – 07.04</span><h3>Tech Radar 505</h3><p class="one">Tech Compass を元に、複数のニュース媒体から記事を集めた毎朝のニュース面。</p><div class="tags"><span class="tag kind">Web</span><span class="tag">公開中・毎朝自動更新</span></div><span class="more">経緯を見る →</span></div></a></li>
+<li class="era-row" id="e2" style="--lc:var(--o);--lt:var(--o-t)"><span class="node" aria-hidden="true"></span><div class="txt"><h2>移行期<small>2026.05.25 – 07.19　Windows と Mac を並行・Codex</small></h2><p class="how">AI への任せ方：<b>設計書を渡して作らせる</b></p></div></li>
+<li class="st star" id="w04" data-star="1" data-video="1" style="--lc:var(--o);--lt:var(--o-t)"><span class="badge" aria-hidden="true">04</span><a class="card" href="works/alarm.html"><div class="thumb v"><img src="video/alarm.jpg" alt="" loading="lazy"><span class="play">動画</span></div><div class="txt"><span class="date">2026.05.24 – 07.19</span><h3>基本情報で起きる</h3><p class="one">基本情報技術者試験の過去問に正解しないと止まらないアラーム。</p><div class="tags"><span class="tag star">代表作</span><span class="tag kind">iPhone アプリ</span><span class="tag">App Store 配信中</span></div><span class="more">動画と経緯を見る →</span></div></a></li>
+<li class="st" id="w05" data-star="0" data-video="0" style="--lc:var(--o);--lt:var(--o-t)"><span class="badge" aria-hidden="true">05</span><a class="card noimg" href="works/lifelog.html"><div class="txt"><span class="date">2026.06.01 – 06.13</span><h3>LifeLog505</h3><p class="one">AI と会話しながら、出来事や気持ちを日記に残すアプリ。</p><div class="tags"><span class="tag fail">失敗</span><span class="tag kind">Web</span></div><span class="more">経緯を見る →</span></div></a></li>
+<li class="st" id="w06" data-star="0" data-video="1" style="--lc:var(--o);--lt:var(--o-t)"><span class="badge" aria-hidden="true">06</span><div class="cardbox"><a class="card" href="works/java.html"><div class="thumb v"><img src="video/java.jpg" alt="" loading="lazy"><span class="play">動画</span></div><div class="txt"><span class="date">2026.06.24 – 10.05</span><h3>Java 教材（柏木タイム）</h3><p class="one">同期に Java を教えた社内勉強会「柏木タイム」全7回。講義資料をもとに、図解で学べるサイトにした。</p><div class="tags"><span class="tag kind">教材</span><span class="tag">講義で使用・好評</span></div><span class="more">動画と経緯を見る →</span></div></a><a class="live" href="https://kashiwagi505.github.io/kashiwagi-time/" target="_blank" rel="noopener"><small>kashiwagi505.github.io/kashiwagi-time</small><span class="go"><b>実際のサイトを開く</b><span class="ar" aria-hidden="true">↗</span></span></a></div></li>
+<li class="era-row" id="e3" style="--lc:var(--b);--lt:var(--b-t)"><span class="node" aria-hidden="true"></span><div class="txt"><h2>第2期<small>2026.07.20 –　Mac・Claude Code ＋ Codex</small></h2><p class="how">AI への任せ方：<b>作らせる仕組みを設計する</b></p></div></li>
+<li class="st star" id="w07" data-star="1" data-video="1" style="--lc:var(--b);--lt:var(--b-t)"><span class="badge" aria-hidden="true">07</span><a class="card" href="works/replogix.html"><div class="thumb v"><img src="video/replogix.jpg" alt="" loading="lazy"><span class="play">動画</span></div><div class="txt"><span class="date">2026.07.22 – 08.07</span><h3>RepLogix</h3><p class="one">ジムの筋トレ記録を少ない操作で残し、Obsidian に保存するアプリ。</p><div class="tags"><span class="tag star">代表作</span><span class="tag kind">iPhone アプリ</span><span class="tag">App Store 配信中</span></div><span class="more">動画と経緯を見る →</span></div></a></li>
+<li class="st" id="w08" data-star="0" data-video="0" style="--lc:var(--b);--lt:var(--b-t)"><span class="badge" aria-hidden="true">08</span><a class="card noimg" href="works/secondbrain.html"><div class="txt"><span class="date">2026.07.29 –</span><h3>SecondBrain</h3><p class="one">思いついたことを一行投げるだけで、Claude が整理してくれる「第二の脳」。</p><div class="tags"><span class="tag kind">仕組み</span><span class="tag">運用中</span></div><span class="more">経緯を見る →</span></div></a></li>
+<li class="st star" id="w09" data-star="1" data-video="1" style="--lc:var(--b);--lt:var(--b-t)"><span class="badge" aria-hidden="true">09</span><div class="cardbox"><a class="card" href="works/janken.html"><div class="thumb v"><img src="video/janken.jpg" alt="" loading="lazy"><span class="play">動画</span></div><div class="txt"><span class="date">2026.08.07 – 08.12</span><h3>じゃんけんRPG</h3><p class="one">じゃんけんを戦闘に組み込んだブラウザ RPG。3日で仕上げた。</p><div class="tags"><span class="tag star">代表作</span><span class="tag kind">ゲーム</span><span class="tag">公開中</span></div><span class="more">動画と経緯を見る →</span></div></a><a class="live" href="https://compass505.github.io/JankenGame/" target="_blank" rel="noopener"><small>compass505.github.io/JankenGame</small><span class="go"><b>実際に遊んでみる</b><span class="ar" aria-hidden="true">↗</span></span></a></div></li>
+<li class="st" id="w10" data-star="0" data-video="1" style="--lc:var(--b);--lt:var(--b-t)"><span class="badge" aria-hidden="true">10</span><div class="cardbox"><a class="card" href="works/sora.html"><div class="thumb v"><img src="video/sora.jpg" alt="" loading="lazy"><span class="play">動画</span></div><div class="txt"><span class="date">2026.08.13 – 08.17</span><h3>そらのめぐり</h3><p class="one">4本のつまみで空をつくり、生まれた「天気の子」を懐かせる育成ゲーム。</p><div class="tags"><span class="tag kind">ゲーム</span><span class="tag">公開中</span></div><span class="more">動画と経緯を見る →</span></div></a><a class="live" href="https://github.com/compass505/soranomeguri" target="_blank" rel="noopener"><small>github.com/compass505/soranomeguri</small><span class="go"><b>GitHub でコードを見る</b><span class="ar" aria-hidden="true">↗</span></span></a></div></li>
+<li class="st star" id="w11" data-star="1" data-video="1" style="--lc:var(--b);--lt:var(--b-t)"><span class="badge" aria-hidden="true">11</span><div class="cardbox"><a class="card" href="works/syncgame.html"><div class="thumb v"><img src="video/syncgame.jpg" alt="" loading="lazy"><span class="play">動画</span></div><div class="txt"><span class="date">2026.08.17 – 09.01</span><h3>SyncGame</h3><p class="one">仲間の行動を事前に組み、その作戦に自分が飛び込む協力パズルアクション。全21ステージ。</p><div class="tags"><span class="tag star">代表作</span><span class="tag kind">ゲーム</span><span class="tag">公開中</span></div><span class="more">動画と経緯を見る →</span></div></a><a class="live" href="https://compass505.github.io/SyncGame/" target="_blank" rel="noopener"><small>compass505.github.io/SyncGame</small><span class="go"><b>実際に遊んでみる</b><span class="ar" aria-hidden="true">↗</span></span></a></div></li>
+<li class="st" id="w12" data-star="0" data-video="0" style="--lc:var(--b);--lt:var(--b-t)"><span class="badge" aria-hidden="true">12</span><a class="card noimg" href="works/training.html"><div class="txt"><span class="date">2026.08.17 – 09.16</span><h3>研修の総合演習</h3><p class="one">実店舗の来店促進のための Web サイトを、新人3人と PM 1人で作って納品した。</p><div class="tags"><span class="tag kind">チーム開発</span><span class="tag">納品・遅延0日</span></div><span class="more">経緯を見る →</span></div></a></li>
+<li class="st" id="w13" data-star="0" data-video="0" style="--lc:var(--b);--lt:var(--b-t)"><span class="badge" aria-hidden="true">13</span><a class="card" href="works/ten.html"><div class="thumb ph"><img src="img/ten-1.jpg" alt="" loading="lazy"></div><div class="txt"><span class="date">2026.08.31 – 09.14</span><h3>Ten</h3><p class="one">夫婦でほっこり笑えることを目指した Android ゲーム。初めての Unity・3D。</p><div class="tags"><span class="tag fail">失敗</span><span class="tag kind">ゲーム</span><span class="tag">APK v1.0</span></div><span class="more">経緯を見る →</span></div></a></li>
+<li class="st last" id="w14" data-star="0" data-video="0" style="--lc:var(--b);--lt:var(--b-t)"><span class="badge" aria-hidden="true">14</span><a class="card" href="works/secretng.html"><div class="thumb ph"><img src="img/secretng-1.jpg" alt="" loading="lazy"></div><div class="txt"><span class="date">2026.09.23 –</span><h3>SECRET NG</h3><p class="one">AI だけが知る「秘密の NG 条件」を、会話中のブザーから推理するパーティーゲーム。</p><div class="tags"><span class="tag kind">ゲーム</span><span class="tag">制作中</span></div><span class="more">経緯を見る →</span></div></a></li>
+</ol>
+<section class="sum" aria-labelledby="sumh"><h2 id="sumh">作品を通して変わったこと</h2><div class="cols">
+<section><h3>AI への任せ方</h3><ol><li><b>対話しながら作らせる</b>（第1期）</li><li><b>設計書を渡して作らせる</b>（移行期）</li><li><b>作らせる仕組みを設計し、自分は判断と遊ぶことに回る</b>（第2期）</li></ol></section>
+<section><h3>今の使い分け</h3><ul><li><b>Claude Code</b>：判断・設計・指揮</li><li><b>Codex</b>：実装・画像・反論役</li><li><b>自分</b>：遊んで確かめる、面白さと見た目の判断</li></ul></section>
+<section><h3>これから</h3><ul><li>見た目の質（画像・3D・UI）を上げる</li><li>設計・要件の精度を上げる</li><li>任せる範囲を広げ、型を使い回す</li></ul></section>
+</div></section>
+<footer>Codex・Claude Code のログ、git の履歴、各プロジェクトの文書、本人の回答をもとにまとめています。<span class="mono">（2026.10.05 時点）</span></footer>
+</div>
+<script>
+(function(){
+  var sts=[].slice.call(document.querySelectorAll('.st')), count=document.getElementById('count');
+  var btns=[].slice.call(document.querySelectorAll('.controls button'));
+  function apply(f){
+    var k=0;
+    btns.forEach(function(x){x.setAttribute('aria-pressed',x.dataset.f===f?'true':'false');});
+    sts.forEach(function(s){var show=!f||s.dataset[f]==='1'; s.hidden=!show; if(show)k++;});
+    count.textContent=(f==='star'?'代表作 ':f==='video'?'動画あり ':'')+k+'作品';
+    try{ if(f) sessionStorage.setItem('filter',f); else sessionStorage.removeItem('filter'); }catch(e){}
+  }
+  btns.forEach(function(b){b.addEventListener('click',function(){
+    apply(b.getAttribute('aria-pressed')==='true'?null:b.dataset.f);
+  });});
+  var saved=null; try{ saved=sessionStorage.getItem('filter'); }catch(e){}
+  if(saved==='star'||saved==='video'){
+    var t=location.hash&&document.getElementById(location.hash.slice(1));
+    if(!t||t.dataset[saved]==='1') apply(saved);
+  }
+})();
+</script>
